@@ -1,7 +1,18 @@
 module.exports = {
-  extends: ["next/core-web-vitals", "@tool-belt/eslint-config", "prettier"],
+  extends: ["next/core-web-vitals", "prettier"],
 	ignorePatterns: ['.eslintrc.js'],
   plugins: ["react", "@typescript-eslint", "prettier"],
+	overrides: [
+		{
+			files: [
+				'**/*.spec.ts',
+				'**/*.spec.tsx',
+				'**/tests/*.*',
+				'__mocks__/**/*.*',
+			],
+			extends: ['@tool-belt/eslint-config'],
+		},
+	],
   env: {
     browser: true,
     es2021: true,
