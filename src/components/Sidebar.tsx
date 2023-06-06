@@ -1,7 +1,15 @@
-import { Box, Divider } from '@chakra-ui/layout';
+import {
+	Box,
+	Divider,
+	LinkBox,
+	LinkOverlay,
+	List,
+	ListItem,
+} from '@chakra-ui/layout';
 import NavMenu from './NavMenu';
-import { MUSIC_MENU, NAV_MENU } from './constants';
+import { MUSIC_MENU, NAV_MENU, PLAYLIST } from './constants';
 import NavLogo from './NavLogo';
+import Link from 'next/link';
 
 export default function Sidebar() {
 	return (
@@ -12,11 +20,25 @@ export default function Sidebar() {
 			paddingX="5px"
 			color="gray"
 		>
-			<Box paddingY="20px">
+			<Box paddingY="20px" height="100%">
 				<NavLogo />
 				<NavMenu menu={NAV_MENU} />
-				<Divider marginY="20px" color="gray.800" />
+				<Divider marginY="10px" color="gray.800" />
 				<NavMenu menu={MUSIC_MENU} />
+				<Divider marginY="10px" color="gray.800" />
+				<Box height="56%" overflowY="auto" paddingY="5px">
+					<List spacing={2}>
+						{PLAYLIST.map((item) => (
+							<ListItem paddingX="20px" key={item}>
+								<LinkBox>
+									<Link href="/">
+										<LinkOverlay>{item}</LinkOverlay>
+									</Link>
+								</LinkBox>
+							</ListItem>
+						))}
+					</List>
+				</Box>
 			</Box>
 		</Box>
 	);
