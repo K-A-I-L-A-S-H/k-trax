@@ -7,7 +7,7 @@
 		"build": "next build",
 		"check:code": "eslint '**/*.{ts,tsx}' --max-warnings 0",
 		"check:style": "stylelint '**/*.{css,scss}'",
-		"format": "prettier --write '**/*.{yml,yaml,json,md,ts,html}'",
+		"format": "prettier --write '**/*.{yml,yaml,json,md,ts,tsx,html}'",
 		"lint": "next lint",
 		"lint:code": "eslint --fix '**/*.{ts,tsx}' --max-warnings 0",
 		"lint:style": "stylelint --fix '**/*.{css,scss}'",
