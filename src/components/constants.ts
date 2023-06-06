@@ -1,4 +1,10 @@
-import { MdHome, MdLibraryMusic, MdSearch } from 'react-icons/md';
+import {
+	MdFavorite,
+	MdHome,
+	MdLibraryMusic,
+	MdPlaylistAdd,
+	MdSearch,
+} from 'react-icons/md';
 import { NavItem } from './types';
 
 export const NAV_MENU: NavItem[] = [
@@ -16,5 +22,18 @@ export const NAV_MENU: NavItem[] = [
 		name: 'Your Library',
 		icon: MdLibraryMusic,
 		route: '/library',
+	},
+];
+
+export const MUSIC_MENU: NavItem[] = [
+	{
+		name: 'Create Playlist',
+		icon: MdPlaylistAdd,
+		route: '/',
+	},
+	{
+		name: 'Favourites',
+		icon: MdFavorite,
+		route: '/favourites',
 	},
 ];

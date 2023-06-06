@@ -6,14 +6,14 @@ import {
 	ListIcon,
 	ListItem,
 } from '@chakra-ui/layout';
-import { NAV_MENU } from './constants';
 import Link from 'next/link';
+import { NavItem } from './types';
 
-export default function NavMenu() {
+export default function NavMenu({ menu }: { menu: NavItem[] }) {
 	return (
-		<Box marginBottom="20px">
+		<Box>
 			<List spacing={2}>
-				{NAV_MENU.map((item) => (
+				{menu.map((item) => (
 					<ListItem paddingX="20px" fontSize="16px" key={item.name}>
 						<LinkBox>
 							<Link href={item.route} passHref>

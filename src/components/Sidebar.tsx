@@ -1,8 +1,7 @@
 import Image from 'next/image';
-import {
-	Box,
-} from '@chakra-ui/layout';
+import { Box, Divider } from '@chakra-ui/layout';
 import NavMenu from './NavMenu';
+import { MUSIC_MENU, NAV_MENU } from './constants';
 
 export default function Sidebar() {
 	return (
@@ -17,7 +16,9 @@ export default function Sidebar() {
 				<Box width="120px" marginBottom="20px" paddingX="20px">
 					<Image src="/assets/k-trax.svg" alt="logo" height="30" width="60" />
 				</Box>
-				<NavMenu />
+				<NavMenu menu={NAV_MENU} />
+				<Divider marginY="20px" color="gray.800" />
+				<NavMenu menu={MUSIC_MENU} />
 			</Box>
 		</Box>
 	);
