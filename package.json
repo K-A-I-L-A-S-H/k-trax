@@ -74,5 +74,8 @@
 		"ts-node": "^10.4.0",
 		"vite-tsconfig-paths": "^4.2.0",
 		"vitest": "^0.32.0"
+	},
+	"prisma": {
+		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
 	}
 }
