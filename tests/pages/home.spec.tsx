@@ -5,6 +5,6 @@ describe('home', () => {
 	it('tests home page', () => {
 		render(<Home />);
 		const text = screen.getByText('k-trax');
-    expect(text).toBeInTheDocument();
+		expect(text).toBeInTheDocument();
 	});
 });
