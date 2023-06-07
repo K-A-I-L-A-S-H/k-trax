@@ -38,4 +38,6 @@ export const MUSIC_MENU: NavItem[] = [
 	},
 ];
 
-export const PLAYLIST = new Array(30).fill(1).map((_, i) => `Playlist - ${i+1}`);
+export const PLAYLIST = new Array(30)
+	.fill(1)
+	.map((_, i) => `Playlist - ${i + 1}`);
