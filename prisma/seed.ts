@@ -1,11 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { artistsData } from './songsData';
+import { ARTIST_DATA } from './songsData';
 
 const prisma = new PrismaClient();
 
 const start = async () => {
-	await artistsData.forEach(async (artist) => {
+	await ARTIST_DATA.forEach(async (artist) => {
 		prisma.artist.upsert({
 			where: { name: artist.name },
 			update: {},
@@ -23,14 +23,30 @@ const start = async () => {
 	});
 
 	const salt = bcrypt.genSaltSync();
-
-	await prisma.user.upsert({
+	const user = await prisma.user.upsert({
 		where: { email: 'user@test.com' },
 		update: {},
 		create: {
 			email: 'user@test.com',
 			password: bcrypt.hashSync('password', salt),
 		},
+	});
+
+	const songs = await prisma.song.findMany({});
+	new Array(10).fill(1).map(async (_, i) => {
+		await prisma.playlist.create({
+			data: {
+				name: `Plalist #${i + 1}`,
+				user: {
+					connect: { id: user.id },
+				},
+				songs: {
+					connect: songs.map((song) => ({
+						id: song.id,
+					})),
+				},
+			},
+		});
 	});
 };
 
