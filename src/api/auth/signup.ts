@@ -6,48 +6,50 @@ import { User } from '@prisma/client';
 import { signToken } from './utils';
 import { ApiHeaders, CookieNames, COOKIE_LIFE } from './constants';
 
-export default async function signUp(req: NextApiRequest, res: NextApiResponse) {
-  const salt = bcrypt.genSaltSync();
-  const {email, password} = req.body;
+export default async function signUp(
+	req: NextApiRequest,
+	res: NextApiResponse,
+) {
+	const salt = bcrypt.genSaltSync();
+	const { email, password } = req.body;
 
-  const user = await createUser(email, password, salt);
+	const user = await createUser(email, password, salt);
 
-  if (!user) {
-    return res.status(400).json({ error: 'Email already exists' });
-  }
+	if (!user) {
+		return res.status(400).json({ error: 'Email already exists' });
+	}
 
-  setAccessTokenCookie(res, signToken(user));
-  res.json(user);
+	setAccessTokenCookie(res, signToken(user));
+	res.json(user);
 }
 
-async function createUser(email: string, password: string, salt: string): Promise<User | null> {
-  try {
-    const hashedPassword = bcrypt.hashSync(password, salt);
-    return await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-      },
-    });
-  } catch (e) {
-    return null;
-  }
+async function createUser(
+	email: string,
+	password: string,
+	salt: string,
+): Promise<User | null> {
+	try {
+		const hashedPassword = bcrypt.hashSync(password, salt);
+		return await prisma.user.create({
+			data: {
+				email,
+				password: hashedPassword,
+			},
+		});
+	} catch (e) {
+		return null;
+	}
 }
 
 function setAccessTokenCookie(res: NextApiResponse, token: string) {
-  res.setHeader(
-    ApiHeaders.COOKIE,
-    cookie.serialize(
-      CookieNames.TRAX_ACCESS_TOKEN,
-      token,
-      {
-        httpOnly: true,
-        maxAge: COOKIE_LIFE,
-        path: '/',
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
-      },
-    ),
-  );
+	res.setHeader(
+		ApiHeaders.COOKIE,
+		cookie.serialize(CookieNames.TRAX_ACCESS_TOKEN, token, {
+			httpOnly: true,
+			maxAge: COOKIE_LIFE,
+			path: '/',
+			sameSite: 'lax',
+			secure: process.env.NODE_ENV === 'production',
+		}),
+	);
 }
-
