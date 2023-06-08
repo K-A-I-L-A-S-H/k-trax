@@ -8,27 +8,29 @@ import { HttpStatus } from '@/lib/constants';
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
 async function signIn(req: NextApiRequest, res: NextApiResponse) {
-  const { email, password } = req.body;
+	const { email, password } = req.body;
 
-  const user = await prisma.user.findUnique({
-    where: { email },
-  });
+	const user = await prisma.user.findUnique({
+		where: { email },
+	});
 
-  if (user && bcrypt.compareSync(password, user.password)) {
-    const token = signToken(user);
-    setAccessTokenCookie(res, token);
-    res.json(user);
-  } else {
-    res.status(HttpStatus.UNAUTHENTICATED).json({ error: 'Invalid email or password' });
-  }
+	if (user && bcrypt.compareSync(password, user.password)) {
+		const token = signToken(user);
+		setAccessTokenCookie(res, token);
+		res.json(user);
+	} else {
+		res
+			.status(HttpStatus.UNAUTHENTICATED)
+			.json({ error: 'Invalid email or password' });
+	}
 }
 
 router.post((req: NextApiRequest, res: NextApiResponse) => {
-  signIn(req, res);
-})
+	signIn(req, res);
+});
 
 export default router.handler({
-  onError: (err, req, _) => {
-    console.error(`Something broke: ${JSON.stringify(err)} :: ${req}`);
-  }
+	onError: (err, req, _) => {
+		console.error(`Something broke: ${JSON.stringify(err)} :: ${req}`);
+	},
 });
