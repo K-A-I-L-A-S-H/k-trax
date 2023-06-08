@@ -34,8 +34,10 @@ const start = async () => {
 
 	const songs = await prisma.song.findMany({});
 	new Array(10).fill(1).map(async (_, i) => {
-		await prisma.playlist.create({
-			data: {
+		await prisma.playlist.upsert({
+			where: { name: `Plalist #${i + 1}` },
+			update: {},
+			create: {
 				name: `Plalist #${i + 1}`,
 				user: {
 					connect: { id: user.id },
