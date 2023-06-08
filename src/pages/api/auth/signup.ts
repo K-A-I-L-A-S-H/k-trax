@@ -15,7 +15,9 @@ async function signUp(req: NextApiRequest, res: NextApiResponse) {
 	const user = await createUser(email, password, salt);
 
 	if (!user) {
-		return res.status(HttpStatus.BAD_REQUEST).json({ error: 'Email already exists' });
+		return res
+			.status(HttpStatus.BAD_REQUEST)
+			.json({ error: 'Email already exists' });
 	}
 
 	setAccessTokenCookie(res, signToken(user));
