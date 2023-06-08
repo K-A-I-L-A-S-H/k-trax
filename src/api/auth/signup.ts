@@ -9,10 +9,7 @@ import { createRouter } from 'next-connect';
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
-async function signUp(
-	req: NextApiRequest,
-	res: NextApiResponse,
-) {
+async function signUp(req: NextApiRequest, res: NextApiResponse) {
 	const salt = bcrypt.genSaltSync();
 	const { email, password } = req.body;
 
@@ -58,11 +55,11 @@ function setAccessTokenCookie(res: NextApiResponse, token: string) {
 }
 
 router.post((req: NextApiRequest, res: NextApiResponse) => {
-  signUp(req, res);
-})
+	signUp(req, res);
+});
 
 export default router.handler({
-  onError: (err, req, event) => {
-    console.error(`Something broke: ${JSON.stringify(err)} :: ${req}`);
-  }
-})
+	onError: (err, req, event) => {
+		console.error(`Something broke: ${JSON.stringify(err)} :: ${req}`);
+	},
+});
