@@ -3,8 +3,8 @@ import cookie from 'cookie';
 import prisma from '@/lib/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { User } from '@prisma/client';
-import { signToken } from './utils';
-import { ApiHeaders, CookieNames, COOKIE_LIFE } from './constants';
+import { signToken } from '../utils';
+import { ApiHeaders, CookieNames, COOKIE_LIFE } from '../constants';
 import { createRouter } from 'next-connect';
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
