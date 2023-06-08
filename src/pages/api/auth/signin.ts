@@ -3,7 +3,7 @@ import { createRouter } from 'next-connect';
 import bcrypt from 'bcrypt';
 import prisma from '@/lib/prisma';
 import { signToken, setAccessTokenCookie } from '../utils';
-import { HttpStatus } from '../constants';
+import { HttpStatus } from '@/lib/constants';
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
