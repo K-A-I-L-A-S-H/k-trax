@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { User } from '@prisma/client';
 import { signToken, setAccessTokenCookie } from '../utils';
 import { createRouter } from 'next-connect';
-import { HttpStatus } from '../constants';
+import { HttpStatus } from '@/lib/constants';
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 

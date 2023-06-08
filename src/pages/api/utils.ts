@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 import jwt from 'jsonwebtoken';
-import { ApiHeaders, COOKIE_LIFE, CookieNames } from './constants';
+import { ApiHeaders, COOKIE_LIFE, CookieNames } from '@/lib/constants';
 import cookie from 'cookie';
 
 export function signToken(user: User): string {

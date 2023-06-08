@@ -1,5 +1,6 @@
 export enum ApiHeaders {
 	COOKIE = 'Set-Cookie',
+	CONTENT_TYPE = 'Content-Type',
 }
 
 export enum CookieNames {
