@@ -5,8 +5,11 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { User } from '@prisma/client';
 import { signToken } from './utils';
 import { ApiHeaders, CookieNames, COOKIE_LIFE } from './constants';
+import { createRouter } from 'next-connect';
 
-export default async function signUp(
+const router = createRouter<NextApiRequest, NextApiResponse>();
+
+async function signUp(
 	req: NextApiRequest,
 	res: NextApiResponse,
 ) {
@@ -53,3 +56,13 @@ function setAccessTokenCookie(res: NextApiResponse, token: string) {
 		}),
 	);
 }
+
+router.post((req: NextApiRequest, res: NextApiResponse) => {
+  signUp(req, res);
+})
+
+export default router.handler({
+  onError: (err, req, event) => {
+    console.error(`Something broke: ${JSON.stringify(err)} :: ${req}`);
+  }
+})
