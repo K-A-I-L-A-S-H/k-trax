@@ -1,11 +1,10 @@
 import bcrypt from 'bcrypt';
-import cookie from 'cookie';
 import prisma from '@/lib/prisma';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { User } from '@prisma/client';
-import { signToken } from '../utils';
-import { ApiHeaders, CookieNames, COOKIE_LIFE } from '../constants';
+import { signToken, setAccessTokenCookie } from '../utils';
 import { createRouter } from 'next-connect';
+import { HttpStatus } from '../constants';
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
@@ -16,7 +15,7 @@ async function signUp(req: NextApiRequest, res: NextApiResponse) {
 	const user = await createUser(email, password, salt);
 
 	if (!user) {
-		return res.status(400).json({ error: 'Email already exists' });
+		return res.status(HttpStatus.BAD_REQUEST).json({ error: 'Email already exists' });
 	}
 
 	setAccessTokenCookie(res, signToken(user));
@@ -41,25 +40,12 @@ async function createUser(
 	}
 }
 
-function setAccessTokenCookie(res: NextApiResponse, token: string) {
-	res.setHeader(
-		ApiHeaders.COOKIE,
-		cookie.serialize(CookieNames.TRAX_ACCESS_TOKEN, token, {
-			httpOnly: true,
-			maxAge: COOKIE_LIFE,
-			path: '/',
-			sameSite: 'lax',
-			secure: process.env.NODE_ENV === 'production',
-		}),
-	);
-}
-
 router.post((req: NextApiRequest, res: NextApiResponse) => {
 	signUp(req, res);
 });
 
 export default router.handler({
-	onError: (err, req, event) => {
+	onError: (err, req, _) => {
 		console.error(`Something broke: ${JSON.stringify(err)} :: ${req}`);
 	},
 });
