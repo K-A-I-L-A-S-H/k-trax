@@ -17,7 +17,7 @@ export default function AuthForm({ mode }: { mode: AuthMode }) {
 			<Flex justify="center" align="center" height="100px" color="white">
 				Hello
 			</Flex>
-			<Flex justify="center" align="center" height="calc(100vh - 100px)">
+			<Flex justify="center" align="center" height="calc(100vh - 100px)" color="white">
 				Form
 			</Flex>
 		</Box>
