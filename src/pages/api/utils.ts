@@ -2,6 +2,7 @@ import { User } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import { ApiHeaders, COOKIE_LIFE, CookieNames } from '@/lib/constants';
 import cookie from 'cookie';
+import { NextApiResponse } from 'next';
 
 export function signToken(user: User): string {
 	return jwt.sign(
