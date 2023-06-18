@@ -1,9 +1,10 @@
 import GradientLayout from '../components/GradientLayout';
+import prisma from '@/lib/prisma';
 
-export default function Home() {
+export default function Home({ artists }) {
 	return (
 		<GradientLayout
-			color="red"
+			color="gray"
 			subtitle="profile"
 			title="Kailash Bisht"
 			description="10 public playlists"
@@ -13,4 +14,14 @@ export default function Home() {
 			<div>Home Page</div>
 		</GradientLayout>
 	);
+}
+
+export async function getServerSideProps() {
+	const artists = await prisma.artist.findMany({});
+
+	return {
+		props: {
+			artists,
+		},
+	};
 }
