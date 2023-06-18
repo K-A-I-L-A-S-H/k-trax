@@ -7,11 +7,14 @@ import {
 	ListItem,
 } from '@chakra-ui/layout';
 import NavMenu from './NavMenu';
-import { MUSIC_MENU, NAV_MENU, PLAYLIST } from './constants';
+import { MUSIC_MENU, NAV_MENU } from './constants';
 import NavLogo from './NavLogo';
 import Link from 'next/link';
+import { usePlaylist } from '@/lib/hooks';
 
 export default function Sidebar() {
+	const { playlists } = usePlaylist();
+
 	return (
 		<Box
 			width="100%"
@@ -28,11 +31,11 @@ export default function Sidebar() {
 				<Divider marginY="10px" color="gray.800" />
 				<Box height="56%" overflowY="auto" paddingY="5px">
 					<List spacing={2}>
-						{PLAYLIST.map((item) => (
-							<ListItem paddingX="20px" key={item}>
+						{playlists.map((playlist) => (
+							<ListItem paddingX="20px" key={playlist.id}>
 								<LinkBox>
-									<Link href="/">
-										<LinkOverlay>{item}</LinkOverlay>
+									<Link href="/" passHref>
+										<LinkOverlay>{playlist.name}</LinkOverlay>
 									</Link>
 								</LinkBox>
 							</ListItem>
