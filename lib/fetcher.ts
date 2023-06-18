@@ -1,7 +1,7 @@
 import { ApiHeaders } from './constants';
 
-export default function fetcher(url: string, data: any = undefined) {
-	return fetch(`/api${url}`, {
+export default async function fetcher(url: string, data: any = undefined) {
+	const response = await fetch(`/api${url}`, {
 		method: data ? 'POST' : 'GET',
 		credentials: 'include',
 		headers: {
@@ -9,4 +9,10 @@ export default function fetcher(url: string, data: any = undefined) {
 		},
 		body: JSON.stringify(data),
 	});
+
+	if (response.status > 399 || response.status < 200) {
+		throw new Error();
+	}
+
+	return response.json();
 }
