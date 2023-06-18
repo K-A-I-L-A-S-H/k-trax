@@ -40,10 +40,13 @@ export default function GradientLayout({
 					<Text fontSize="x-small" fontWeight="bold" casing="uppercase">
 						{subtitle}
 					</Text>
-					<Text fontSize="6xl">{title}</Text>
+					<Text fontSize="6xl" fontWeight="bold">
+						{title}
+					</Text>
 					<Text fontSize="x-small">{description}</Text>
 				</Box>
 			</Flex>
+			<Box paddingY="50px">{children}</Box>
 		</Box>
 	);
 }
