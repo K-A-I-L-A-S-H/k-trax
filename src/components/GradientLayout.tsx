@@ -26,8 +26,8 @@ export default function GradientLayout({
 			overflowY="auto"
 			bgGradient={`linear(${color}.500 0%, ${color}.600 15%, ${color}.700 40%, rgba(0,0,0,0.95) 75%)`}
 		>
-			<Flex bg={`${color}.600`} padding="40px" align="end">
-				<Box padding="20px">
+			<Flex bg={`${color}.600`} padding="20px" align="end">
+				<Box padding="10px">
 					<Image
 						boxSize="160px"
 						boxShadow="2xl"
@@ -46,7 +46,7 @@ export default function GradientLayout({
 					<Text fontSize="x-small">{description}</Text>
 				</Box>
 			</Flex>
-			<Box paddingY="50px">{children}</Box>
+			<Box paddingY="30px">{children}</Box>
 		</Box>
 	);
 }
