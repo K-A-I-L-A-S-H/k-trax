@@ -33,7 +33,7 @@ model Song {
   duration  Int
   url       String
 
-  astist    Artist     @relation(fields: [artistId], references: [id])
+  artist    Artist     @relation(fields: [artistId], references: [id])
   playlists Playlist[]
 }
 
