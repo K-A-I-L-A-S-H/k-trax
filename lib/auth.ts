@@ -35,3 +35,7 @@ export default function validateRoute(routeHandler: any) {
 		}
 	};
 }
+
+export function verifyToken(token: string) {
+	return jwt.verify(token, process.env.JWT_SECRET!);
+}
