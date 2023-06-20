@@ -10,9 +10,9 @@ const router = createRouter<NextApiRequest, NextApiResponse>();
 
 async function signUp(req: NextApiRequest, res: NextApiResponse) {
 	const salt = bcrypt.genSaltSync();
-	const { email, password } = req.body;
+	const { email, password, firstName, lastName } = req.body;
 
-	const user = await createUser(email, password, salt);
+	const user = await createUser(email, password, firstName, lastName, salt);
 
 	if (!user) {
 		return res
@@ -27,6 +27,8 @@ async function signUp(req: NextApiRequest, res: NextApiResponse) {
 async function createUser(
 	email: string,
 	password: string,
+	firstName: string,
+	lastName: string,
 	salt: string,
 ): Promise<User | null> {
 	try {
@@ -35,6 +37,8 @@ async function createUser(
 			data: {
 				email,
 				password: hashedPassword,
+				firstName,
+				lastName,
 			},
 		});
 	} catch (e) {
