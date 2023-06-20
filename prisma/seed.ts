@@ -3,14 +3,17 @@ import bcrypt from 'bcrypt';
 import { ARTIST_DATA } from './songsData';
 
 const prisma = new PrismaClient();
+const IMAGE_URL =
+	'https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png';
 
 const start = async () => {
-	await ARTIST_DATA.forEach(async (artist) => {
-		prisma.artist.upsert({
+	ARTIST_DATA.map(async (artist) => {
+		await prisma.artist.upsert({
 			where: { name: artist.name },
 			update: {},
 			create: {
 				name: artist.name,
+				image: IMAGE_URL,
 				songs: {
 					create: artist.songs.map((song) => ({
 						name: song.name,
@@ -29,6 +32,8 @@ const start = async () => {
 		create: {
 			email: 'user@test.com',
 			password: bcrypt.hashSync('password', salt),
+			firstName: 'Kailash',
+			lastName: 'B',
 		},
 	});
 
