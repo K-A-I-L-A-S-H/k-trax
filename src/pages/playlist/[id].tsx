@@ -42,8 +42,7 @@ export async function getServerSideProps({
 		where: { id: +id, userId: user.id },
 		include: {
 			songs: {
-				select: {
-					name: true,
+				include: {
 					artist: {
 						select: {
 							name: true,
