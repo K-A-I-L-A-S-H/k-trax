@@ -2,7 +2,7 @@ import GradientLayout from '@/src/components/GradientLayout';
 import { InferGetServerSidePropsType, NextApiRequest } from 'next';
 import prisma from '@/lib/prisma';
 import { verifyToken } from '@/lib/auth';
-import { Box } from '@chakra-ui/layout';
+import SongsTable from '@/src/components/SongsTable';
 
 const getBgColor = () => {
 	const color = ['red', 'blue', 'purple', 'gray', 'teal', 'green'];
@@ -24,7 +24,7 @@ export default function Playlist(
 			image={`https://picsum.photos/400?random${playlist.id}`}
 			roundImage={false}
 		>
-			<Box color="white">{playlist.id}</Box>
+			<SongsTable songs={playlist.songs} />
 		</GradientLayout>
 	);
 }
