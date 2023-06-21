@@ -36,7 +36,19 @@ export async function getServerSideProps({
 	query: { id: string };
 	req: NextApiRequest;
 }) {
-	const user = verifyToken(req.cookies.TRAX_ACCESS_TOKEN!);
+	let user;
+
+	try {
+		user = verifyToken(req.cookies.TRAX_ACCESS_TOKEN!);
+	} catch (err: unknown) {
+		console.log(err);
+		return {
+			redirect: {
+				destination: '/signin',
+				permanent: false,
+			},
+		};
+	}
 
 	const playlist = await prisma.playlist.findFirst({
 		where: { id: +id, userId: user.id },
