@@ -1,7 +1,8 @@
 import { Box, Flex, Text } from '@chakra-ui/layout';
+import { Song } from '@prisma/client';
 import Image from 'next/image';
 
-export default function PlayerAlbumTile() {
+export default function PlayerAlbumTile({ activeSong }: { activeSong: Song }) {
 	return (
 		<Flex align="center" width="30%">
 			<Box>
@@ -13,8 +14,8 @@ export default function PlayerAlbumTile() {
 				/>
 			</Box>
 			<Box padding="20px" color="white">
-				<Text fontSize="large">Song Name</Text>
-				<Text fontSize="sm">Artist Name</Text>
+				<Text fontSize="large">{activeSong.name}</Text>
+				<Text fontSize="sm">{activeSong.artist.name}</Text>
 			</Box>
 		</Flex>
 	);
