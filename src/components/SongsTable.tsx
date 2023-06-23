@@ -4,8 +4,17 @@ import { BsFillPlayFill } from 'react-icons/bs';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { Song } from '@prisma/client';
 import { formatDate, formatTime } from '@/lib/formatter';
+import { useStoreActions } from 'easy-peasy';
 
 export default function SongsTable({ songs }: { songs: Song[] }) {
+	const playSongs = useStoreActions((store: any) => store.changeActiveSongs);
+	const setActiveSong = useStoreActions((store: any) => store.changeActiveSong);
+
+	const handlePlay = (activeSong?: Song) => {
+		setActiveSong(activeSong ?? songs[0]);
+		playSongs(songs);
+	};
+
 	return (
 		<Box bg="transparent" color="white">
 			<Box padding="5px">
@@ -16,6 +25,7 @@ export default function SongsTable({ songs }: { songs: Song[] }) {
 						colorScheme="green"
 						size="lg"
 						isRound
+						onClick={() => handlePlay()}
 					/>
 				</Box>
 				<Table variant="unstyled">
@@ -39,7 +49,8 @@ export default function SongsTable({ songs }: { songs: Song[] }) {
 									},
 								}}
 								key={song.id}
-								cursor="cursor"
+								cursor="pointer"
+								onClick={() => handlePlay(song)}
 							>
 								<Td>{idx + 1}</Td>
 								<Td>{song.name}</Td>
