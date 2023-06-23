@@ -37,6 +37,8 @@ export default function Player({
 	const [shuffle, setShuffle] = useState(false);
 	const [duration, setDuration] = useState(0.0);
 
+	const soundRef = useRef(null);
+
 	const setPlayState = (value: boolean) => {
 		setPlaying(value);
 	};
@@ -49,11 +51,30 @@ export default function Player({
 		setRepeat((state) => !state);
 	};
 
+	const previousSong = () => {
+		setIndex((state) => {
+			return state ? state - 1 : songs.length - 1;
+		});
+	};
+
+	const nextSong = () => {
+		setIndex((state) => {
+			if (shuffle) {
+				const nextIdx = Math.floor(Math.random() * songs.length);
+				if (nextIdx === state) {
+					return nextSong();
+				}
+				return nextIdx;
+			}
+			return state === songs.length - 1 ? 0 : state + 1;
+		});
+	};
+
 	return (
 		<Box width="40%">
 			<Box>
 				<Box>
-					<ReactHowler playing={playing} src={activeSong?.url} />
+					<ReactHowler playing={playing} src={activeSong?.url} ref={soundRef} />
 				</Box>
 				<Center color="gray.600">
 					<ButtonGroup>
