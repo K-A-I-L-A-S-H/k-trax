@@ -32,14 +32,18 @@ export default function Player({
 	activeSong: Song;
 }) {
 	const [playing, setPlaying] = useState(true);
-	const [index, setIndex] = useState(0);
+	const [index, setIndex] = useState(
+		songs.findIndex((s) => s.id === activeSong.id),
+	);
 	const [seek, setSeek] = useState(0.0);
 	const [isSeeking, setIsSeeking] = useState(false);
 	const [repeat, setRepeat] = useState(false);
 	const [shuffle, setShuffle] = useState(false);
 	const [duration, setDuration] = useState(0.0);
+	const setActiveSong = useStoreActions((state: any) => state.changeActiveSong);
 
 	const soundRef = useRef(null);
+	const repeatRef = useRef(repeat);
 
 	useEffect(() => {
 		let timerId: number;
@@ -56,6 +60,14 @@ export default function Player({
 
 		return cancelAnimationFrame(timerId!);
 	}, [playing, isSeeking]);
+
+	useEffect(() => {
+		setActiveSong(songs[index]);
+	}, [index, setActiveSong, songs]);
+
+	useEffect(() => {
+		repeatRef.current = repeat;
+	}, [repeat]);
 
 	const setPlayState = (value: boolean) => {
 		setPlaying(value);
@@ -89,11 +101,13 @@ export default function Player({
 	};
 
 	const onEnd = () => {
-		if (repeat) {
+		if (repeatRef.current) {
+			console.log('came');
 			setSeek(0);
 			soundRef?.current?.seek(0);
+		} else {
+			return nextSong();
 		}
-		return nextSong();
 	};
 
 	const onLoad = () => {
