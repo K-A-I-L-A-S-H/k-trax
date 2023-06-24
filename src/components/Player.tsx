@@ -41,6 +41,22 @@ export default function Player({
 
 	const soundRef = useRef(null);
 
+	useEffect(() => {
+		let timerId: number;
+
+		if (playing && !isSeeking) {
+			const f = () => {
+				setSeek(soundRef?.current?.seek());
+				timerId = requestAnimationFrame(f);
+			};
+
+			timerId = requestAnimationFrame(f);
+			return () => cancelAnimationFrame(timerId);
+		}
+
+		return cancelAnimationFrame(timerId!);
+	}, [playing, isSeeking]);
+
 	const setPlayState = (value: boolean) => {
 		setPlaying(value);
 	};
@@ -165,7 +181,7 @@ export default function Player({
 				<Box color="gray.600">
 					<Flex justify="center" align="center">
 						<Box width="10%">
-							<Text fontSize="xs">2:10</Text>
+							<Text fontSize="xs">{formatTime(seek)}</Text>
 						</Box>
 						<Box width="80%">
 							<RangeSlider
