@@ -202,7 +202,7 @@ export default function Player({
 								aria-label={['min', 'max']}
 								step={0.1}
 								min={0}
-								max={duration ? duration.toFixed() : 0}
+								max={duration ? duration.toFixed(2) : 0}
 								id="player-range"
 								onChange={onSeek}
 								value={[seek]}
